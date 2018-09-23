@@ -22,8 +22,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const paypalDiv = bitcoinDiv.prev();
   const button = $("button");
   const name = document.getElementById("name");
-  const email = $('#mail');
-  const error = $(".isa_error").hide();
+  const $email = $("#mail");
+  const $error = $(".isa_error").hide();
+  const $name = $("#name");
+  const error = document.querySelector(".error");
+  const email = document.getElementById("mail");
+  const cardNumber = document.getElementById("cc-num");
   // ----------------------------------------------
   //other title - text area
   const otherTitle = $('<textarea rows="3" cols="24.5"></textarea>');
@@ -31,9 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   otherTitle.attr("id", "other-title");
   $("fieldset:first").after(otherTitle);
 
-
   // Default settings
-  error.hide();
+  $error.hide();
   $("#colors-js-puns").hide();
   otherTitle.hide();
   bitcoinDiv.hide();
@@ -70,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if ($("#design option:last").is(":selected")) {
+      $("#colors-js-puns").show();
       color
         .eq(3)
         .prevAll()
@@ -133,27 +137,63 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // ------------------------------------------------
   // Form validation --------------------------------
-  name.addEventListener("input", function(event) {
-    if(name.value.length === 1) {
-      alert("NO");
-    }
-  })
-  email.on("input", function(event) {
-    if(email.validity.valid) {
-      error.innerHTML = "";
-    }
-  },false,);
+  email.addEventListener(
+    // real-time checking if the email input has an email-like format
+    "input",
+    function(event) {
+      if (checkEmail(email.value)) {
+        $email.addClass("success");
+      } else {
+        $email.addClass("error");
+      }
+    },
+    false
+  );
 
-  $('form').on("submit", function(event) {
-          console.log('a')
-    if(!email.validity.valid) {
-      error.show();
-
+  $("input[name='user_cc-num']").keyup(function(){
+  if (cCard.is(":selected")) {
+    if (!/^[0-9]+$/.test(cardNumber.value)) {
+      // if it's only numbers, then
+      //replace any letters with an empty string, allow only numbers
+      this.value = this.value.replace(/\D/g, '');
     }
-
+  }
+});
+  //-----------------
+  $("form").submit(function(event) {
+    if (name.value.length === 0) {
+      // if the name is empty, then add an error class
+      $name.addClass("error");
+      $name.after("<p>The name can't be empty!</p>");
+      event.preventDefault();
+    } else {
+      $name.addClass("success");
+    }
+    if (!checkEmail(email.value)) {
+      // checks if the email input has an email-like format
+      event.preventDefault();
+    }
+    if ($("#activities input:checked").length > 0) {
+      //if there are any checkboxes selected it works! ... but if not ...
+      return;
+    } else {
+      event.preventDefault();
+    }
+    if (cCard.is(":selected")) {
+      if (!/^[0-9]+$/.test(cardNumber.value)) {
+        // if it's only numbers, then..
+        this.value = this.value.replace(/\D/g, '');
+      }
+    }
   });
 
   //-------------------------------------------------
   //test
-  console.log(button);
+  console.log($("#activities input:checked").length);
+  // function to check the format of an email address
+  function checkEmail(email) {
+    var result = /\S+@\S+\.\S+/;
+    return result.test(email);
+  }
+  // -----------
 });

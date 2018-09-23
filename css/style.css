@@ -196,3 +196,18 @@ button:hover {
     font-size:1.7em;
     vertical-align:middle;
 }
+
+.error {
+  border-color: #900;
+  background-color: #FDD;
+}
+
+.success {
+  border-color: #4BB543;
+  background-color: #CFDBC5;
+}
+
+input:invalid{
+  border-color: #900;
+  background-color: #FDD;
+}
