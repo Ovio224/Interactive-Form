@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const error = document.querySelector(".error");
   const email = document.getElementById("mail");
   const cardNumber = document.getElementById("cc-num");
+  const zip = document.getElementById('zip');
+  const cvv = document.getElementById('cvv');
   // ----------------------------------------------
   //other title - text area
   const otherTitle = $('<textarea rows="3" cols="24.5"></textarea>');
@@ -127,12 +129,16 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#payment").change(function() {
     if (paypal.is(":selected")) {
       cardDiv.hide();
+      bitcoinDiv.hide();
       paypalDiv.show();
     } else if (bitcoin.is(":selected")) {
       paypalDiv.hide();
+      cardDiv.hide();
       bitcoinDiv.show();
     } else {
       cardDiv.show();
+      paypalDiv.hide();
+      bitcoinDiv.hide();
     }
   });
   // ------------------------------------------------
@@ -150,15 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
     false
   );
 
-  $("input[name='user_cc-num']").keyup(function(){
-  if (cCard.is(":selected")) {
-    if (!/^[0-9]+$/.test(cardNumber.value)) {
-      // if it's only numbers, then
-      //replace any letters with an empty string, allow only numbers
-      this.value = this.value.replace(/\D/g, '');
+  $("input[name='user_cc-num']").keyup(function() {
+    if (cCard.is(":selected")) {
+      if (!/^[0-9]+$/.test(cardNumber.value)) {
+        // if it's only numbers, then
+        //replace any letters with an empty string, allow only numbers
+        this.value = this.value.replace(/\D/g, "");
+      }
     }
-  }
-});
+  });
   //-----------------
   $("form").submit(function(event) {
     if (name.value.length === 0) {
@@ -169,9 +175,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       $name.addClass("success");
     }
-    if (!checkEmail(email.value)) {
+    if (!checkEmail(email.value) && email.value.length === 0) {
       // checks if the email input has an email-like format
       event.preventDefault();
+      $email.addClass('error');
     }
     if ($("#activities input:checked").length > 0) {
       //if there are any checkboxes selected it works! ... but if not ...
@@ -180,16 +187,29 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
     }
     if (cCard.is(":selected")) {
-      if (!/^[0-9]+$/.test(cardNumber.value)) {
-        // if it's only numbers, then..
-        this.value = this.value.replace(/\D/g, '');
+      if (cardNumber.value.length >= 13 && cardNumber.value.length <= 16) {
+        $("#cc-num").addClass("success");
+      } else {
+        $("#cc-num").addClass("error");
+        event.preventDefault();
       }
-    }
+      if(zip.value.length === 5) {
+        $('#zip').addClass('success')
+      } else {
+        $("#zip").addClass('error');
+      }
+      if(cvv.value.length === 3) {
+        $('#cvv').addClass('success');
+      } else {
+        $('#cvv').addClass('error');
+        event.preventDefault();
+      }
+    } else return;
   });
 
   //-------------------------------------------------
   //test
-  console.log($("#activities input:checked").length);
+  console.log();
   // function to check the format of an email address
   function checkEmail(email) {
     var result = /\S+@\S+\.\S+/;
