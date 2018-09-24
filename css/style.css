@@ -184,18 +184,19 @@ button:hover {
 .isa_error {
     color: #D8000C;
     background-color: #FFD2D2;
-    margin: 10px 200px;
-    padding:10px;
+    margin-right: 40px;
+    margin-bottom: -10px;
+    padding:3px;
     border-radius: 5px;
-    text-align: left;
+    /* text-align: left;
     text-indent: 2px;
-    font-size: 1.4em;
+    font-size: 1.4em; */
   }
-.isa_error i {
+/* .isa_error i {
     margin:10px 22px;
     font-size:1.7em;
     vertical-align:middle;
-}
+} */
 
 .error {
   border-color: #900;
@@ -210,4 +211,11 @@ button:hover {
 input:invalid{
   border-color: #900;
   background-color: #FDD;
+}
+
+.err {
+  color: #900;
+  margin-top: -10px;
+  font-weight: 500;
+  margin-left: 30px;
 }

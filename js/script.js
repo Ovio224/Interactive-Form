@@ -28,17 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const error = document.querySelector(".error");
   const email = document.getElementById("mail");
   const cardNumber = document.getElementById("cc-num");
-  const zip = document.getElementById('zip');
-  const cvv = document.getElementById('cvv');
+  const zip = document.getElementById("zip");
+  const cvv = document.getElementById("cvv");
   // ----------------------------------------------
   //other title - text area
   const otherTitle = $('<textarea rows="3" cols="24.5"></textarea>');
   otherTitle.attr("placeholder", "Your job role");
   otherTitle.attr("id", "other-title");
   $("fieldset:first").after(otherTitle);
-
+  // ---------------
+  // Adding another default option to the color of the T-shirts
+  const option = $("<option>Please select a T-shirt theme</option>");
+  option.attr("selected", "selected");
+  option.attr("disabled", true);
+  $("#color").prepend(option);
+  //----------------
   // Default settings
   $error.hide();
+  $("#design option:first").attr("disabled", true);
+  color.hide();
   $("#colors-js-puns").hide();
   otherTitle.hide();
   bitcoinDiv.hide();
@@ -67,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .eq(2)
         .nextAll()
         .hide();
+      $('#color option[value="cornflowerblue"]').attr("selected", "selected");
     } else {
       color
         .eq(2)
@@ -80,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .eq(3)
         .prevAll()
         .hide();
+      $('#color option[value="tomato"]').attr("selected", "selected");
     } else {
       color
         .eq(3)
@@ -119,11 +129,39 @@ document.addEventListener("DOMContentLoaded", () => {
       jsFramework.removeAttr("disabled");
       jsFrameworkLabel.css("color", "black");
     }
+    // if ($('input[type="checkbox"]:checked').length > 0) {
+    //   total.show();
+    // } else {
+    //   total.hide();
+    // }
+    // Make a total sum of the activities
+    // 1. salvezi ultima particica si le aduni pe toate intr-un total
+    if ($('input[name="js-libs"]').is(":checked")) {
+      let c = 100;
+    } else {
+      let c = 0;
+    }
+    if ($('input[name="all"]').is(":checked")) {
+      let a = 200;
+    } else {
+      let a = 0;
+    }
+    // if ($('input[name="js-frameworks"]').is(":checked")) {
+    //
+    // } else {
+    //
+    // }
+
+    // 2. make a sum of all, check if they're checked and update their value if checked
   });
+  if ($('input[name="js-libs"]').is(":checked")) {
+    console.log('erge')
+  }
+  // window.sumAll = a + b + c + d + e + f + g;
+  // activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
+  const total = $(".total");
+  total.hide();
   // ----------------------------------------------
-  // Make a total sum of the activities
-  // 1. salvezi ultima particica si le aduni pe toate intr-un total
-  // 2.
 
   // Payment method will either show or hide depending on which one is selected ----
   $("#payment").change(function() {
@@ -155,13 +193,27 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     false
   );
-
+  // real-time check for numbers only, deleting any letters
   $("input[name='user_cc-num']").keyup(function() {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cardNumber.value)) {
         // if it's only numbers, then
         //replace any letters with an empty string, allow only numbers
-        this.value = this.value.replace(/\D/g, "");
+        cardNumber.value = cardNumber.value.replace(/\D/g, "");
+      }
+    }
+  });
+  $("input[name='user_zip']").keyup(function() {
+    if (cCard.is(":selected")) {
+      if (!/^[0-9]+$/.test(zip.value)) {
+        zip.value = zip.value.replace(/\D/g, "");
+      }
+    }
+  });
+  $("input[name='user_cvv']").keyup(function() {
+    if (cCard.is(":selected")) {
+      if (!/^[0-9]+$/.test(cvv.value)) {
+        cvv.value = cvv.value.replace(/\D/g, "");
       }
     }
   });
@@ -170,22 +222,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (name.value.length === 0) {
       // if the name is empty, then add an error class
       $name.addClass("error");
-      $name.after("<p>The name can't be empty!</p>");
+      $name.after(
+        `<i class="isa_error fa fa-times-circle"></i><p class='err'>The name can't be empty!</p>`
+      );
+
       event.preventDefault();
     } else {
       $name.addClass("success");
     }
-    if (!checkEmail(email.value) && email.value.length === 0) {
-      // checks if the email input has an email-like format
+    if (!checkEmail(email.value)) {
+      // checks if the email input has an email-like format and displays an error if not
+      $email.after(
+        `<i class="isa_error fa fa-times-circle"></i><p class='err'>Please enter a valid email!</p>`
+      );
       event.preventDefault();
-      $email.addClass('error');
+      $email.addClass("error");
     }
-    if ($("#activities input:checked").length > 0) {
-      //if there are any checkboxes selected it works! ... but if not ...
-      return;
+    if (email.value.length == 0) {
+      $email.after(
+        // checks if the email is empty or not
+        `<i class="isa_error fa fa-times-circle"></i><p class='err'>The email cannot be empty!</p>`
+      );
+    }
+    if ($('input[type="checkbox"]:checked').length > 0) {
+      //if there are any checkboxes selected it works! ... but if not ... errors!
     } else {
+      activities.prepend(
+        `<i class="isa_error fa fa-times-circle"></i><p class='err'>You need to select at least one activity!</p>`
+      );
       event.preventDefault();
     }
+    // form validation for the card number information
     if (cCard.is(":selected")) {
       if (cardNumber.value.length >= 13 && cardNumber.value.length <= 16) {
         $("#cc-num").addClass("success");
@@ -193,18 +260,25 @@ document.addEventListener("DOMContentLoaded", () => {
         $("#cc-num").addClass("error");
         event.preventDefault();
       }
-      if(zip.value.length === 5) {
-        $('#zip').addClass('success')
+      if (zip.value.length === 5) {
+        $("#zip").addClass("success");
       } else {
-        $("#zip").addClass('error');
-      }
-      if(cvv.value.length === 3) {
-        $('#cvv').addClass('success');
-      } else {
-        $('#cvv').addClass('error');
+        $("#zip").addClass("error");
         event.preventDefault();
       }
-    } else return;
+      if (cvv.value.length === 3) {
+        $("#cvv").addClass("success");
+      } else {
+        $("#cvv").addClass("error");
+        event.preventDefault();
+      }
+    }
+    $(".err") // animations for the errors to dissappear after 5.5 seconds
+      .delay(5500)
+      .fadeOut();
+    $(".isa_error")
+      .delay(5500)
+      .fadeOut();
   });
 
   //-------------------------------------------------
@@ -216,4 +290,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return result.test(email);
   }
   // -----------
+  function totalSum() {
+
+    var sumAll = 0;
+    const total = $(".total");
+    activities.on("click", function(event) {
+      if ($('input[type="checkbox"]:checked').length > 0) {
+        total.show();
+      } else {
+        total.hide();
+      }
+      if ($('input[name="js-libs"]').is(":checked")) {
+        let c = 100;
+      } else {
+        let c = 0;
+      }
+      if ($('input[name="all"]').is(":checked")) {
+        let a = 200;
+      } else {
+        let a = 0;
+      }
+      sumAll = a + b + c + d + e + f + g;
+    });
+
+    activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
+
+  }
+  totalSum();
+
 });
