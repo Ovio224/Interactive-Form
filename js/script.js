@@ -135,17 +135,16 @@ document.addEventListener("DOMContentLoaded", () => {
     //   total.hide();
     // }
     // Make a total sum of the activities
-    // 1. salvezi ultima particica si le aduni pe toate intr-un total
-    if ($('input[name="js-libs"]').is(":checked")) {
-      let c = 100;
-    } else {
-      let c = 0;
-    }
-    if ($('input[name="all"]').is(":checked")) {
-      let a = 200;
-    } else {
-      let a = 0;
-    }
+    // if ($('input[name="js-libs"]').is(":checked")) {
+    //   let c = 100;
+    // } else {
+    //   let c = 0;
+    // }
+    // if ($('input[name="all"]').is(":checked")) {
+    //   let a = 200;
+    // } else {
+    //   let a = 0;
+    // }
     // if ($('input[name="js-frameworks"]').is(":checked")) {
     //
     // } else {
@@ -154,13 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 2. make a sum of all, check if they're checked and update their value if checked
   });
-  if ($('input[name="js-libs"]').is(":checked")) {
-    console.log('erge')
-  }
-  // window.sumAll = a + b + c + d + e + f + g;
-  // activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
-  const total = $(".total");
-  total.hide();
+
   // ----------------------------------------------
 
   // Payment method will either show or hide depending on which one is selected ----
@@ -286,36 +279,25 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log();
   // function to check the format of an email address
   function checkEmail(email) {
-    var result = /\S+@\S+\.\S+/;
+    const result = /\S+@\S+\.\S+/;
     return result.test(email);
   }
   // -----------
+
+  // window.sumAll = a + b + c + d + e + f + g;
+  // activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
+  // const total = $(".total");
+  // total.hide();
+  const checkboxes = $('input[type="checkbox"]');
   function totalSum() {
-
-    var sumAll = 0;
-    const total = $(".total");
-    activities.on("click", function(event) {
-      if ($('input[type="checkbox"]:checked').length > 0) {
-        total.show();
-      } else {
-        total.hide();
+    let sum = 0;
+    const checkbox = document.querySelectorAll('input[type="checkbox"]');
+    for(let i = 0; i<= checkboxes.length; i++) {
+      if (checkbox[i].checked) {
+        console.log('hi');
       }
-      if ($('input[name="js-libs"]').is(":checked")) {
-        let c = 100;
-      } else {
-        let c = 0;
-      }
-      if ($('input[name="all"]').is(":checked")) {
-        let a = 200;
-      } else {
-        let a = 0;
-      }
-      sumAll = a + b + c + d + e + f + g;
-    });
-
-    activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
-
+    }
   }
-  totalSum();
-
+  activities.on("click", totalSum());
+  console.log();
 });
