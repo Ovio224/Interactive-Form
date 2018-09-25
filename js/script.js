@@ -129,28 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
       jsFramework.removeAttr("disabled");
       jsFrameworkLabel.css("color", "black");
     }
-    // if ($('input[type="checkbox"]:checked').length > 0) {
-    //   total.show();
-    // } else {
-    //   total.hide();
-    // }
-    // Make a total sum of the activities
-    // if ($('input[name="js-libs"]').is(":checked")) {
-    //   let c = 100;
-    // } else {
-    //   let c = 0;
-    // }
-    // if ($('input[name="all"]').is(":checked")) {
-    //   let a = 200;
-    // } else {
-    //   let a = 0;
-    // }
-    // if ($('input[name="js-frameworks"]').is(":checked")) {
-    //
-    // } else {
-    //
-    // }
-
     // 2. make a sum of all, check if they're checked and update their value if checked
   });
 
@@ -283,21 +261,27 @@ document.addEventListener("DOMContentLoaded", () => {
     return result.test(email);
   }
   // -----------
-
-  // window.sumAll = a + b + c + d + e + f + g;
-  // activities.after(`<h2 class='total'>Your total is: ${sumAll}$</h2>`);
   // const total = $(".total");
   // total.hide();
   const checkboxes = $('input[type="checkbox"]');
   function totalSum() {
     let sum = 0;
     const checkbox = document.querySelectorAll('input[type="checkbox"]');
-    for(let i = 0; i<= checkboxes.length; i++) {
-      if (checkbox[i].checked) {
-        console.log('hi');
+    for (let i = 0; i < checkboxes.length; i++) {
+      var boxi = checkbox[i];
+      if (boxi.checked === true) {
+        let price = checkboxes
+          .eq(i)
+          .parent()
+          .html();
+        let number = price.substr(price.indexOf("$") + 1);
+        number = parseInt(number);
+        sum = sum + number;
       }
     }
+    // return sum;
+    activities.after(`<h2 class='total'>Your total is: ${sum}$</h2>`);
   }
-  activities.on("click", totalSum());
-  console.log();
+  let theTotal = totalSum();
+  activities.on("change", totalSum);
 });
