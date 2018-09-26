@@ -261,8 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return result.test(email);
   }
   // -----------
-  // const total = $(".total");
-  // total.hide();
   const checkboxes = $('input[type="checkbox"]');
   function totalSum() {
     let sum = 0;
@@ -280,8 +278,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     // return sum;
-    activities.after(`<h2 class='total'>Your total is: ${sum}$</h2>`);
+    $(".total").html(`Your total is: <span id="sum">${sum}$</span>`);
+    $("#sum").css("color", "190E4F");
+    if (sum == 0) {
+      $('.total').hide();
+    } else {
+      $('.total').show();
+    }
   }
-  let theTotal = totalSum();
+
+  activities.after("<h2 class='total'></h2>");
   activities.on("change", totalSum);
 });
