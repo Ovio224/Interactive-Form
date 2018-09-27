@@ -129,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
       jsFramework.removeAttr("disabled");
       jsFrameworkLabel.css("color", "black");
     }
-    // 2. make a sum of all, check if they're checked and update their value if checked
   });
 
   // ----------------------------------------------
@@ -169,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cardNumber.value)) {
         // if it's only numbers, then
-        //replace any letters with an empty string, allow only numbers
+        // replace any letters with an empty string, allow only numbers
         cardNumber.value = cardNumber.value.replace(/\D/g, "");
       }
     }
@@ -253,14 +252,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   //-------------------------------------------------
-  //test
-  console.log();
   // function to check the format of an email address
   function checkEmail(email) {
     const result = /\S+@\S+\.\S+/;
     return result.test(email);
   }
   // -----------
+  // check for the target checkbox and ...
   const checkboxes = $('input[type="checkbox"]');
   function totalSum() {
     let sum = 0;
@@ -272,21 +270,22 @@ document.addEventListener("DOMContentLoaded", () => {
           .eq(i)
           .parent()
           .html();
+        //substract the amount of $ into a number and make a sum of them all
         let number = price.substr(price.indexOf("$") + 1);
         number = parseInt(number);
         sum = sum + number;
       }
     }
-    // return sum;
+    // return the total sum as a span
     $(".total").html(`Your total is: <span id="sum">${sum}$</span>`);
     $("#sum").css("color", "190E4F");
     if (sum == 0) {
-      $('.total').hide();
+      $(".total").hide();
     } else {
-      $('.total').show();
+      $(".total").show();
     }
   }
-
+  // creating the total header
   activities.after("<h2 class='total'></h2>");
   activities.on("change", totalSum);
 });
