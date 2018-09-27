@@ -130,9 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       jsFrameworkLabel.css("color", "black");
     }
   });
-
   // ----------------------------------------------
-
   // Payment method will either show or hide depending on which one is selected ----
   $("#payment").change(function() {
     if (paypal.is(":selected")) {
@@ -164,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     false
   );
   // real-time check for numbers only, deleting any letters
-  $("input[name='user_cc-num']").keyup(function() {
+  $("#cc-num").keyup(function() {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cardNumber.value)) {
         // if it's only numbers, then
@@ -173,14 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-  $("input[name='user_zip']").keyup(function() {
+  $("#zip").keyup(function() {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(zip.value)) {
         zip.value = zip.value.replace(/\D/g, "");
       }
     }
   });
-  $("input[name='user_cvv']").keyup(function() {
+  $("#cvv").keyup(function() {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cvv.value)) {
         cvv.value = cvv.value.replace(/\D/g, "");
