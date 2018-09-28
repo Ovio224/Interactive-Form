@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#name").focus();
   // declaring variables --------------------------
   const title = $("#title");
+  const otherTitle = $("textarea")
   const design = $("#design");
   const color = $("#color option");
   const activities = $(".activities");
@@ -32,10 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cvv = document.getElementById("cvv");
   // ----------------------------------------------
   //other title - text area
-  const otherTitle = $('<textarea rows="3" cols="24.5"></textarea>');
   otherTitle.attr("placeholder", "Your job role");
   otherTitle.attr("id", "other-title");
-  $("fieldset:first").after(otherTitle);
   // ---------------
   // Adding another default option to the color of the T-shirts
   const option = $("<option>Please select a T-shirt theme</option>");
@@ -161,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     false
   );
-  // real-time check for numbers only, deleting any letters
+  // real-time check for the card info, checks for numbers only, deleting any letters
   $("#cc-num").keyup(function() {
     if (cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cardNumber.value)) {
