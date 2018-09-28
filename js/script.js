@@ -2,39 +2,37 @@ document.addEventListener("DOMContentLoaded", () => {
   // put focus on the first text input
   $("#name").focus();
   // declaring variables --------------------------
-  const title = $("#title");
-  const otherTitle = $("textarea")
-  const design = $("#design");
-  const color = $("#color option");
-  const activities = $(".activities");
-  const jsFramework = $('input[name="js-frameworks"]');
-  const jsFrameworkLabel = $(".activities label").eq(1);
-  const jsLibraries = $('input[name="js-libs"]');
-  const jsLibrariesLabel = jsFrameworkLabel.next();
-  const express = $('input[name="express"]');
-  const expressLabel = $(".activities label").eq(3);
-  const node = $('input[name="node"]');
-  const nodeLabel = expressLabel.next();
-  const cCard = $("#payment option:first").next();
-  const paypal = cCard.next();
-  const bitcoin = paypal.next();
-  const bitcoinDiv = $("div:last");
-  const cardDiv = $("#credit-card");
-  const paypalDiv = bitcoinDiv.prev();
-  const button = $("button");
+  const $title = $("#title");
+  const $otherTitle = $("textarea");
+  const $design = $("#design");
+  const $color = $("#color option");
+  const $activities = $(".activities");
+  const $jsFramework = $('input[name="js-frameworks"]');
+  const $jsFrameworkLabel = $(".activities label").eq(1);
+  const $jsLibraries = $('input[name="js-libs"]');
+  const $jsLibrariesLabel = $jsFrameworkLabel.next();
+  const $express = $('input[name="express"]');
+  const $expressLabel = $(".activities label").eq(3);
+  const $node = $('input[name="node"]');
+  const $nodeLabel = $expressLabel.next();
+  const $cCard = $("#payment option:first").next();
+  const $paypal = $cCard.next();
+  const $bitcoin = $paypal.next();
+  const $bitcoinDiv = $("div:last");
+  const $cardDiv = $("#credit-card");
+  const $paypalDiv = $bitcoinDiv.prev();
   const name = document.getElementById("name");
   const $email = $("#mail");
   const $error = $(".isa_error").hide();
   const $name = $("#name");
-  const error = document.querySelector(".error");
   const email = document.getElementById("mail");
   const cardNumber = document.getElementById("cc-num");
   const zip = document.getElementById("zip");
   const cvv = document.getElementById("cvv");
   // ----------------------------------------------
   //other title - text area
-  otherTitle.attr("placeholder", "Your job role");
-  otherTitle.attr("id", "other-title");
+  $otherTitle.attr("placeholder", "Your job role");
+  $otherTitle.attr("id", "other-title");
   // ---------------
   // Adding another default option to the color of the T-shirts
   const option = $("<option>Please select a T-shirt theme</option>");
@@ -45,38 +43,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // Default settings
   $error.hide();
   $("#design option:first").attr("disabled", true);
-  color.hide();
+  $color.hide();
   $("#colors-js-puns").hide();
-  otherTitle.hide();
-  bitcoinDiv.hide();
-  paypalDiv.hide();
-  cCard.prev().attr("disabled", true);
-  cCard.attr("selected", "selected");
+  $otherTitle.hide();
+  $bitcoinDiv.hide();
+  $paypalDiv.hide();
+  $cCard.prev().attr("disabled", true);
+  $cCard.attr("selected", "selected");
   // ----------------------------------------------
 
   // Show the other title if the "Other" option is selected
-  title.change(function() {
+  $title.change(function() {
     if ($("#title option:last").is(":selected")) {
-      otherTitle.show();
+      $otherTitle.show();
     } else {
-      otherTitle.hide();
+      $otherTitle.hide();
     }
   });
   // Show the color by design -----------------------
-  design.change(function() {
+  $design.change(function() {
     if (
       $("#design option:first")
         .next()
         .is(":selected")
     ) {
       $("#colors-js-puns").show();
-      color
+      $color
         .eq(2)
         .nextAll()
         .hide();
       $('#color option[value="cornflowerblue"]').attr("selected", "selected");
     } else {
-      color
+      $color
         .eq(2)
         .nextAll()
         .show();
@@ -84,13 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if ($("#design option:last").is(":selected")) {
       $("#colors-js-puns").show();
-      color
+      $color
         .eq(3)
         .prevAll()
         .hide();
       $('#color option[value="tomato"]').attr("selected", "selected");
     } else {
-      color
+      $color
         .eq(3)
         .prevAll()
         .show();
@@ -98,52 +96,52 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // ----------------------------------------------
   // Activities time check and disable the respective checkbox
-  activities.on("click", function(event) {
-    if (jsLibraries.is(":checked")) {
-      node.attr("disabled", true);
-      nodeLabel.css("color", "gray");
+  $activities.on("click", function(event) {
+    if ($jsLibraries.is(":checked")) {
+      $node.attr("disabled", true);
+      $nodeLabel.css("color", "gray");
     } else {
-      node.removeAttr("disabled");
-      nodeLabel.css("color", "black");
+      $node.removeAttr("disabled");
+      $nodeLabel.css("color", "black");
     }
-    if (node.is(":checked")) {
-      jsLibraries.attr("disabled", true);
-      jsLibrariesLabel.css("color", "gray");
+    if ($node.is(":checked")) {
+      $jsLibraries.attr("disabled", true);
+      $jsLibrariesLabel.css("color", "gray");
     } else {
-      jsLibraries.removeAttr("disabled");
-      jsLibrariesLabel.css("color", "black");
+      $jsLibraries.removeAttr("disabled");
+      $jsLibrariesLabel.css("color", "black");
     }
-    if (jsFramework.is(":checked")) {
-      express.attr("disabled", true);
-      expressLabel.css("color", "gray");
+    if ($jsFramework.is(":checked")) {
+      $express.attr("disabled", true);
+      $expressLabel.css("color", "gray");
     } else {
-      express.removeAttr("disabled");
+      $express.removeAttr("disabled");
 
-      expressLabel.css("color", "black");
+      $expressLabel.css("color", "black");
     }
-    if (express.is(":checked")) {
-      jsFramework.attr("disabled", true);
-      jsFrameworkLabel.css("color", "gray");
+    if ($express.is(":checked")) {
+      $jsFramework.attr("disabled", true);
+      $jsFrameworkLabel.css("color", "gray");
     } else {
-      jsFramework.removeAttr("disabled");
-      jsFrameworkLabel.css("color", "black");
+      $jsFramework.removeAttr("disabled");
+      $jsFrameworkLabel.css("color", "black");
     }
   });
   // ----------------------------------------------
   // Payment method will either show or hide depending on which one is selected ----
   $("#payment").change(function() {
-    if (paypal.is(":selected")) {
-      cardDiv.hide();
-      bitcoinDiv.hide();
-      paypalDiv.show();
-    } else if (bitcoin.is(":selected")) {
-      paypalDiv.hide();
-      cardDiv.hide();
-      bitcoinDiv.show();
+    if ($paypal.is(":selected")) {
+      $cardDiv.hide();
+      $bitcoinDiv.hide();
+      $paypalDiv.show();
+    } else if ($bitcoin.is(":selected")) {
+      $paypalDiv.hide();
+      $cardDiv.hide();
+      $bitcoinDiv.show();
     } else {
-      cardDiv.show();
-      paypalDiv.hide();
-      bitcoinDiv.hide();
+      $cardDiv.show();
+      $paypalDiv.hide();
+      $bitcoinDiv.hide();
     }
   });
   // ------------------------------------------------
@@ -162,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   // real-time check for the card info, checks for numbers only, deleting any letters
   $("#cc-num").keyup(function() {
-    if (cCard.is(":selected")) {
+    if ($cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cardNumber.value)) {
         // if it's only numbers, then
         // replace any letters with an empty string, allow only numbers
@@ -171,14 +169,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   $("#zip").keyup(function() {
-    if (cCard.is(":selected")) {
+    if ($cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(zip.value)) {
         zip.value = zip.value.replace(/\D/g, "");
       }
     }
   });
   $("#cvv").keyup(function() {
-    if (cCard.is(":selected")) {
+    if ($cCard.is(":selected")) {
       if (!/^[0-9]+$/.test(cvv.value)) {
         cvv.value = cvv.value.replace(/\D/g, "");
       }
@@ -214,13 +212,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if ($('input[type="checkbox"]:checked').length > 0) {
       //if there are any checkboxes selected it works! ... but if not ... errors!
     } else {
-      activities.prepend(
+      $activities.prepend(
         `<i class="isa_error fa fa-times-circle"></i><p class='err'>You need to select at least one activity!</p>`
       );
       event.preventDefault();
     }
     // form validation for the card number information
-    if (cCard.is(":selected")) {
+    if ($cCard.is(":selected")) {
       if (cardNumber.value.length >= 13 && cardNumber.value.length <= 16) {
         $("#cc-num").addClass("success");
       } else {
@@ -283,6 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   // creating the total header
-  activities.after("<h2 class='total'></h2>");
-  activities.on("change", totalSum);
+  $activities.after("<h2 class='total'></h2>");
+  $activities.on("change", totalSum);
 });
