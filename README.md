@@ -1,3 +1,3 @@
 # Interactive-Form
 
-An interactive form made with JQuery and Javascript as the 3rd project from the Full Stack Javascript TechDegree
+In this project, I'm using JavaScript to enhance an interactive registration form for a fictional conference called "FullStack Conf."
